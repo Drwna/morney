@@ -15,33 +15,16 @@ import {Component} from 'vue-property-decorator';
 
 @Component
 export default class Types extends Vue {
-  type = '-';
+  type = '-'; // '-' 支出, '+' 收入
 
-  selectType(type: string): void { // type 只能是 ‘-’ 或 ‘+’
+  selectType(type: string): void {
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
     }
     this.type = type;
   }
 }
-/*
-export default {
-  name: 'Types',
-  data() {
-    return {
-      type: '-' // - 支出，+ 收入
-    }
-  },
-  methods: {
-    selectType(type) { // type 只能是 ‘-’ 或 ‘+’
-      if (type !== '-' && type !== '+') {
-        throw new Error('type is unknown')
-      }
-      this.type = type
-    }
-  },
-};
-*/
+
 
 </script>
 
