@@ -9,7 +9,22 @@
   </ul>
 </template>
 
-<script lang="js">
+<script lang="ts">
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class Types extends Vue {
+  type = '-';
+
+  selectType(type: string): void { // type 只能是 ‘-’ 或 ‘+’
+    if (type !== '-' && type !== '+') {
+      throw new Error('type is unknown');
+    }
+    this.type = type;
+  }
+}
+/*
 export default {
   name: 'Types',
   data() {
@@ -26,6 +41,8 @@ export default {
     }
   },
 };
+*/
+
 </script>
 
 <style lang="scss" scoped>
