@@ -16,6 +16,17 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
 
+const version = window.localStorage.getItem('version') || '0';
+const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+
+if (version === '0.0.1') {
+  // 数据库升级 数据迁移
+  recordList.forEach(record => {
+    record.createdAt = new Date(2021, 0, 0);
+  });
+}
+window.localStorage.setItem('version', '0.0.2');
+
 
 type Record = {
   tags: string[],
