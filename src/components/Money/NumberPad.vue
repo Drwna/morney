@@ -61,7 +61,10 @@ export default class NumberPad extends Vue {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  ok(): void {}
+  ok(): void {
+    this.$emit('update:value', this.output);
+    this.output = '0';
+  }
 
 }
 
