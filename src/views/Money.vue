@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    {{ recordList }}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <Notes @update:value="onUpdateNotes"/>
@@ -26,7 +25,7 @@ export default class Money extends Vue {
   tags = ['衣', '食', '住', '行', '女朋友', '男朋友'];
   recordList = recordList;
   // eslint-disable-next-line no-undef
-  record: RecordItem[] = {
+  record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
 

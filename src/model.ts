@@ -1,4 +1,3 @@
-/* eslint-disable */
 const localStorageKeyName = 'recordList';
 const model = {
   clone(data: RecordItem[] | RecordItem): RecordItem {
@@ -7,7 +6,7 @@ const model = {
   fetch(): RecordItem[] {
     return JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]') as RecordItem[];
   },
-  save(data: RecordItem[]) {
+  save(data: RecordItem[]): void {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(data));
   }
 };
