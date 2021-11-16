@@ -15,8 +15,10 @@ body {
   line-height: 1.5;
   font-size: 16px;
   font-family: $font-hei;
+  background: #f5f5f5;
 }
-.clearfix{
+
+.clearfix {
   content: '';
   display: block;
   clear: both;
