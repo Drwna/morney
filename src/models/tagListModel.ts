@@ -1,3 +1,5 @@
+import createId from '@/lib/createId';
+
 const localStorageKeyName = 'tagList';
 type Tag = {
   id: string,
@@ -21,7 +23,8 @@ const tagListModel: TagListModel = {
     // this.data = [{id:'1', name:'1'},{id:'2', name:'2'}]
     const names = this.data.map(item => item.name);
     if (names.indexOf(name) >= 0) { return 'duplicated'; }
-    this.data.push({id: name, name: name});
+    const id = createId().toString();
+    this.data.push({id, name: name});
     this.save();
     return 'success';
   },
@@ -30,6 +33,7 @@ const tagListModel: TagListModel = {
     if (idList.indexOf(id) >= 0) {
       const names = this.data.map(item => item.id);
       if (names.indexOf(name) >= 0) {
+        window.alert('标签已存在');
         return 'duplicated';
       } else {
         const tag = this.data.filter(item => item.id === id)[0];
@@ -49,11 +53,10 @@ const tagListModel: TagListModel = {
         break;
       }
     }
-    this.data.splice(index, 1);
-    this.save();
-    window.alert('删除成功');
-    window.location.replace('/labels#/labels');
-    // window.localStorage.clear();
+    if (window.confirm('确认删除')) {
+      this.data.splice(index, 1);
+      this.save();
+    }
     return true;
   },
   save() {
