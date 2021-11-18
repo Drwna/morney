@@ -56,8 +56,10 @@ const tagListModel: TagListModel = {
     if (window.confirm('确认删除')) {
       this.data.splice(index, 1);
       this.save();
+      return true;
+    } else {
+      return false;
     }
-    return true;
   },
   save() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
