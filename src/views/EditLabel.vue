@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <layout>
     edit labels
-  </div>
+  </layout>
 </template>
 
 <script lang="ts">
