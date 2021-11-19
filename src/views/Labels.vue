@@ -38,8 +38,6 @@ export default class Labels extends Vue {
       const message = tagListModel.create(name);
       if (message === 'duplicated') {
         window.alert('标签名已存在，不能重复添加');
-      } else if (message === 'success') {
-        window.alert('添加成功');
       }
     }
   }
