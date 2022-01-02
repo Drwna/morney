@@ -19,14 +19,18 @@ type TagListModel = {
   save: () => void,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Window {
-  tagList: Tag[];
-  findTag: (id: string) => Tag | undefined;
-  createTag: (name: string) => void;
-  removeTag: (id: string) => boolean;
-  // updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
-  updateTag: TagListModel['update']; // 相同的简写
+  // store: {
+  //   tagList: Tag[];
+  //   findTag: (id: string) => Tag | undefined;
+  //   createTag: (name: string) => void;
+  //   removeTag: (id: string) => boolean;
+  //   // updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+  //   updateTag: TagListModel['update']; // 相同的简写
+  //
+  //   recordList: RecordItem[];
+  //   createRecord: (record: RecordItem) => void;
+  // };
 
-  recordList: RecordItem[];
-  createRecord: (record: RecordItem) => void;
 }
