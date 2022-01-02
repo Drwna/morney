@@ -21,7 +21,6 @@ import recordListModel from '@/models/recordListModel';
 
 
 const recordList = recordListModel.fetch();
-// const tagList = tagListModel.fetch();
 
 
 @Component({components: {Tags, FormItem, Types, NumberPad}})
