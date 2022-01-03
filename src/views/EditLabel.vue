@@ -28,6 +28,7 @@ import store from '@/store/index2';
 })
 export default class EditLabel extends Vue {
   tag = store.findTag(this.$route.params.id);
+
   // tag?: { id: string, name: string } = undefined;
 
   created(): void {
@@ -47,8 +48,6 @@ export default class EditLabel extends Vue {
     if (this.tag) {
       if (store.removeTag(this.tag.id)) {
         this.$router.back();
-      } else {
-        window.alert('删除失败');
       }
     }
   }
