@@ -17,23 +17,33 @@ import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component} from 'vue-property-decorator';
-import store from '@/store/index2';
+import store from '@/store/index.ts';
 
 
-@Component({components: {Tags, FormItem, Types, NumberPad}})
+@Component({
+  components: {Tags, FormItem, Types, NumberPad},
+  computed: {
+    recordList() {
+      return this.$store.state.recordList;
+    }
+  }
+
+})
 export default class Money extends Vue {
-  recordList = store.recordList;
-  // eslint-disable-next-line no-undef
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
+
+  created(){
+    this.$store.commit('fetchRecords')
+  }
 
   onUpdateNotes(value: string): void {
     this.record.notes = value;
   }
 
   saveRecord(): void {
-    store.createRecord(this.record);
+    this.$store.commit('createRecord', this.record);
   }
 
   // @Watch('recordList')
