@@ -27,14 +27,14 @@ import Button from '@/components/Button.vue';
 })
 export default class EditLabel extends Vue {
 
-  get tag():void {
+  get tag(): any {
     return this.$store.state.currentTag;
   }
 
-  created():void {
+  created(): void {
     const id = this.$route.params.id;
+    this.$store.commit('fetchTags');
     this.$store.commit('setCurrentTag', id);
-
     if (!this.tag) {
       this.$router.replace('/404');
     }
@@ -42,17 +42,13 @@ export default class EditLabel extends Vue {
 
   update(name: string): void {
     if (this.tag) {
-      // TODO
-      // store.updateTag(this.tag.id, name);
+      this.$store.commit('updateTag', {id: this.tag.id, name});
     }
   }
 
   remove(): void {
-    // TODO
     if (this.tag) {
-      // if (store.removeTag(this.tag.id)) {
-      //   this.$router.back();
-      // }
+      this.$store.commit('removeTag', this.tag.id);
     }
   }
 
