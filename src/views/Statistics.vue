@@ -3,10 +3,10 @@
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval"/>
     <ol>
-      <li v-for="group in result" :key="group.title">
+      <li v-for="(group,index) in groupList" :key="index">
         <h3 class="title">{{ beautify(group.title) }}</h3>
         <ol>
-          <li v-for="item in group.items" :key="item.id"
+          <li v-for="item in group.item" :key="item.id"
               class="record">
             <span>{{ tagString(item.tags) }}</span>
             <span class="notes">{{ item.notes }}</span>
@@ -26,6 +26,7 @@ import Tabs from '@/components/Tabs.vue';
 import intervalList from '@/constants/intervalList';
 import recordTypeList from '@/constants/recordTypeList';
 import * as dayjs from 'dayjs';
+import clone from '@/lib/clone';
 
 @Component({
   components: {Tabs}
@@ -48,7 +49,7 @@ export default class Statistics extends Vue {
     }
   }
 
-  tagString(tags: string[]): string {
+  tagString(tags: Tag[]): string {
     return tags.length === 0 ? '无' : tags.join(',');
   }
 
@@ -56,20 +57,24 @@ export default class Statistics extends Vue {
     return (this.$store.state as RootState).recordList;
   }
 
-  get result(): { [key: string]: { title: string, items: RecordItem[] } } {
+
+  get groupList(): [] {
     const {recordList} = this;
-    type HashTabItem = { title: string, items: RecordItem[] }
+    if (recordList.length === 0) return [];
 
-    const hashTable: { [key: string]: HashTabItem } = {};
+    const newList = clone(recordList).sort((a, b) => dayjs(b.createdAt.valueOf()) - dayjs(a.createdAt).valueOf());
 
-    for (let i = 0; i < recordList.length; i++) {
-      const [date, time] = recordList[i].createdAt!.split('T');
-
-      hashTable[date] = hashTable[date] || {title: date, items: []};
-
-      hashTable[date].items.push(recordList[i]);
+    const result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), item: [newList[0]]}];
+    for (let i = 1; i < newList.length; i++) {
+      const current = newList[i];
+      const last = result[result.length - 1];
+      if (dayjs(last.title).isSame(dayjs(current.createdAt), 'day')) {
+        last.item.push(current);
+      } else {
+        result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), item: [current]});
+      }
     }
-    return hashTable;
+    return result;
   }
 
   beforeCreate(): void {
